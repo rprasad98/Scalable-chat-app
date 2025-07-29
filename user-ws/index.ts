@@ -30,7 +30,7 @@ wss.on('connection', function connection(ws) {
           }
       })
       
-    ws.send('something');
+   // ws.send('something');
     
     
 });

@@ -34,11 +34,25 @@ describe("chat application", () => {
          
 
         await new Promise<void>((resolve) => {
-            client2.onmessage = (data: string) => {
-            const parsedData = JSON.parse(data)
-            expect(parsedData.type == 'chat')
-            expect(parsedData.message == 'hello there')
-            resolve()
+            client2.onmessage = (event) => {
+                // event.data may be a Buffer or string depending on ws version/environment
+                let dataStr: string;
+                console.log(typeof(event.data))
+                 if (typeof event.data === "string") {
+                    dataStr = event.data;
+                } else if (event.data instanceof Buffer) {
+                    dataStr = event.data.toString();
+                } else if (event.data instanceof ArrayBuffer) {
+                    dataStr = Buffer.from(event.data).toString();
+                } else {
+                    // fallback for other types
+                    dataStr = String(event.data);
+                }
+                console.log(dataStr);
+                const parsedData = JSON.parse(dataStr);
+                expect(parsedData.type).toBe('chat');
+                expect(parsedData.message).toBe('hello there');
+                resolve();
             }
             client1.send(JSON.stringify({
                 type: 'chat', roomId: 'test-room',
@@ -50,14 +64,3 @@ describe("chat application", () => {
     
     })
 })
-
-// function waitForChatMessage(ws) {
-//   return new Promise((resolve) => {
-//     ws.on('message', (data) => {
-//       const msg = data.toString();
-//       if (msg.includes('Hello from client1')) {
-//         resolve(msg);
-//       }
-//     });
-//   });
-// }
