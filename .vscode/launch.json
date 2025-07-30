@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Bun Server",
+      "program": "${workspaceFolder}/user-ws/index.ts",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--inspect"],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Bun Test",
+      "program": "${workspaceFolder}/user-ws/index.test.ts",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--inspect", "test"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

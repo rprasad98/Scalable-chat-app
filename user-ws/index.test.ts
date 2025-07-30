@@ -1,12 +1,13 @@
 import { WebSocket } from "ws";
 const BASE_URL = "ws://localhost:8080";
+const BASE_URL2 = "ws://localhost:8081";
 import { describe, expect, test } from "bun:test"
 
 describe("chat application", () => {
     test('clients can join a room and receive messages', async () => {
 
         const client1 = new WebSocket(BASE_URL)
-        const client2 = new WebSocket(BASE_URL)
+        const client2 = new WebSocket(BASE_URL2)
         
         console.log('control reaches here1')
 
